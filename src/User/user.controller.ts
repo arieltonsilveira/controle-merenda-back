@@ -1,9 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Request, Response } from 'express';
 
 @Controller()
 export class UserController {
+  listUser = [];
+
   @Get('user')
-  findAll(): string {
-    return 'This action returns all cats';
+  findAll(@Res() response: Response) {
+    return response.status(200).json(this.listUser);
+  }
+
+  @Post('user')
+  cadastrarUser(@Req() request: Request, @Res() response: Response) {
+    this.listUser.push(request.body)
+    return response.status(200).json("adicionado com sucesso");
   }
 }
